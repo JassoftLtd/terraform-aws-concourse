@@ -2,7 +2,7 @@ resource "aws_vpc" "default" {
   cidr_block = "${var.vpc_cidr}"
   enable_dns_hostnames = true
   tags {
-    Name = "terraform-aws-vpc"
+    Name = "concourse-ci-vpc"
   }
 }
 
@@ -20,7 +20,7 @@ resource "aws_subnet" "eu-west-1a-public" {
   availability_zone = "eu-west-1a"
 
   tags {
-    Name = "Public Subnet"
+    Name = "concourse-public-subnet"
   }
 }
 
@@ -33,7 +33,7 @@ resource "aws_route_table" "eu-west-1a-public" {
   }
 
   tags {
-    Name = "Public Subnet"
+    Name = "concourse-public-subnet"
   }
 }
 
@@ -52,7 +52,7 @@ resource "aws_subnet" "eu-west-1a-private" {
   availability_zone = "eu-west-1a"
 
   tags {
-    Name = "Private Subnet"
+    Name = "concourse-private-subnet"
   }
 }
 
@@ -65,7 +65,7 @@ resource "aws_route_table" "eu-west-1a-private" {
   }
 
   tags {
-    Name = "Private Subnet"
+    Name = "concourse-private-subnet"
   }
 }
 
