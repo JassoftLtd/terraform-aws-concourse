@@ -8,17 +8,9 @@ if ! which concourse; then
   mv concourse /usr/local/bin/concourse
 fi
 
-mkdir -p keys/web keys/worker
+aws s3 cp s3://${keys_bucket}/ ./keys --recursive
 
-ssh-keygen -t rsa -f ./keys/web/tsa_host_key -N ''
-ssh-keygen -t rsa -f ./keys/web/session_signing_key -N ''
-
-ssh-keygen -t rsa -f ./keys/worker/worker_key -N ''
-
-cp ./keys/worker/worker_key.pub ./keys/web/authorized_worker_keys
-cp ./keys/web/tsa_host_key.pub ./keys/worker
-
-mkdir /opt/concourse/worker
+mkdir -p /opt/concourse/worker
 
 touch /var/log/concourse_worker.log
 chmod 666 /var/log/concourse_worker.log

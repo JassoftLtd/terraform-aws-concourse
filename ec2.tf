@@ -21,6 +21,7 @@ data "template_file" "concourse_web_init" {
     database_username = "${aws_db_instance.concourse-db.username}"
     database_password = "${aws_db_instance.concourse-db.password}"
     database_identifier = "${aws_db_instance.concourse-db.name}"
+    keys_bucket = "${aws_s3_bucket.keys-bucket.bucket}"
   }
 }
 
@@ -29,6 +30,7 @@ data "template_file" "concourse_worker_init" {
 
   vars {
     tsa_host = "${aws_instance.concourse_web.private_ip}"
+    keys_bucket = "${aws_s3_bucket.keys-bucket.bucket}"
   }
 }
 
@@ -40,7 +42,7 @@ resource "aws_instance" "concourse_web" {
   user_data = "${data.template_file.concourse_web_init.rendered}"
   associate_public_ip_address = true
   key_name = "jonshaw"
-
+  iam_instance_profile = "${aws_iam_instance_profile.concourse_profile.id}"
   vpc_security_group_ids = ["${aws_security_group.concourse_web_security_group.id}"]
 
   tags {
@@ -54,6 +56,7 @@ resource "aws_instance" "concourse_worker" {
   subnet_id = "${aws_subnet.public.id}"
   user_data = "${data.template_file.concourse_worker_init.rendered}"
   associate_public_ip_address = true
+  iam_instance_profile = "${aws_iam_instance_profile.concourse_profile.id}"
   key_name = "jonshaw"
 
   vpc_security_group_ids = ["${aws_security_group.concourse_worker_security_group.id}"]
