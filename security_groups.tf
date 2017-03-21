@@ -4,13 +4,6 @@ resource "aws_security_group" "concourse_web_security_group" {
   vpc_id      = "${aws_vpc.default.id}"
 
   ingress {
-    from_port   = "80"
-    to_port     = "80"
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  ingress {
     from_port   = "8080"
     to_port     = "8080"
     protocol    = "tcp"
@@ -20,13 +13,6 @@ resource "aws_security_group" "concourse_web_security_group" {
   ingress {
     from_port   = "2222"
     to_port     = "2222"
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  ingress {
-    from_port   = "22"
-    to_port     = "22"
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
@@ -56,13 +42,6 @@ resource "aws_security_group" "concourse_worker_security_group" {
   name        = "concourse_worker_security_group"
   description = "Allow access"
   vpc_id      = "${aws_vpc.default.id}"
-
-  ingress {
-    from_port   = "22"
-    to_port     = "22"
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
 
   egress {
     from_port   = 0

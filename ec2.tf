@@ -37,11 +37,10 @@ data "template_file" "concourse_worker_init" {
 resource "aws_instance" "concourse_web" {
   ami           = "${data.aws_ami.amazon_linux.id}"
   instance_type = "t2.micro"
-  subnet_id = "${aws_subnet.public.id}"
-  private_ip = "10.0.0.4"
+  subnet_id = "${aws_subnet.eu-west-1a-public.id}"
+  private_ip = "10.0.0.5"
   user_data = "${data.template_file.concourse_web_init.rendered}"
   associate_public_ip_address = true
-  key_name = "jonshaw"
   iam_instance_profile = "${aws_iam_instance_profile.concourse_profile.id}"
   vpc_security_group_ids = ["${aws_security_group.concourse_web_security_group.id}"]
 
@@ -50,33 +49,18 @@ resource "aws_instance" "concourse_web" {
   }
 }
 
-resource "aws_instance" "concourse_worker" {
-  ami           = "${data.aws_ami.amazon_linux.id}"
-  instance_type = "t2.micro"
-  subnet_id = "${aws_subnet.public.id}"
-  user_data = "${data.template_file.concourse_worker_init.rendered}"
-  associate_public_ip_address = true
-  iam_instance_profile = "${aws_iam_instance_profile.concourse_profile.id}"
-  key_name = "jonshaw"
+resource "aws_spot_fleet_request" "concourse_workers" {
+  iam_fleet_role = "${aws_iam_role.iam_fleet_role.arn}"
+  spot_price      = "0.02"
+  target_capacity = 1
+  valid_until     = "2019-11-04T20:44:20Z"
 
-  vpc_security_group_ids = ["${aws_security_group.concourse_worker_security_group.id}"]
-
-  tags {
-    Name = "Concoourse-Worker"
+  launch_specification {
+    instance_type     = "m4.large"
+    ami               = "${data.aws_ami.amazon_linux.id}"
+    subnet_id         = "${aws_subnet.eu-west-1a-private.id}"
+    vpc_security_group_ids = ["${aws_security_group.concourse_worker_security_group.id}"]
+    user_data         = "${data.template_file.concourse_worker_init.rendered}"
+    iam_instance_profile = "${aws_iam_instance_profile.concourse_profile.id}"
   }
 }
-
-//resource "aws_spot_fleet_request" "concourse_workers" {
-//  iam_fleet_role = "${aws_iam_role.iam_fleet_role.arn}"
-//  spot_price      = "0.02"
-//  target_capacity = 1
-//  valid_until     = "2019-11-04T20:44:20Z"
-//
-//  launch_specification {
-//    instance_type     = "m4.large"
-//    ami               = "${data.aws_ami.amazon_linux.id}"
-//    subnet_id         = "${aws_subnet.public.id}"
-//    vpc_security_group_ids = ["${aws_security_group.concourse_worker_security_group.id}"]
-//    user_data         = "${data.template_file.concourse_worker_init.rendered}"
-//  }
-//}
