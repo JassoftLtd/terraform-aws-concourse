@@ -1,4 +1,4 @@
-# terraform-aws-concourse
+# Concourse AWS Terraform script
 Terraform scripts to deploy Concourse into an AWS account.
 
 This Concourse setup runs with a Postgres instance in RDS and workers in a spot request fleet.
