@@ -7,5 +7,5 @@ This gives a discount to running the workers and also allows a flexible number o
 # Deploy to AWS
 To deploy Concourse to AWS simply run terraform apply. 
 ```
-terraform apply -var aws_access_key=YOUR_AWS_ACCESS_KEY -var aws_secret_key=YOUR_AWS_SECRET_KEY
+terraform apply -var key_name=MY_KEY_NAME -var aws_access_key=YOUR_AWS_ACCESS_KEY -var aws_secret_key=YOUR_AWS_SECRET_KEY
 ```

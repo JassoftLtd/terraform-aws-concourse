@@ -8,9 +8,7 @@ if ! which concourse; then
   mv concourse /usr/local/bin/concourse
 fi
 
-aws s3 cp s3://${keys_bucket}/ ./keys --recursive
-
-if [ ! -f ./keys/web/tsa_host_key ]; then
+if [ `aws s3 ls s3://${keys_bucket}/web/tsa_host_key | grep tsa_host_key.pub -c` -eq 0 ]; then
     mkdir -p keys/web keys/worker
 
     ssh-keygen -t rsa -f ./keys/web/tsa_host_key -N ''
@@ -22,6 +20,8 @@ if [ ! -f ./keys/web/tsa_host_key ]; then
     cp ./keys/web/tsa_host_key.pub ./keys/worker
 
     aws s3 cp ./keys s3://${keys_bucket}/ --recursive
+else
+    aws s3 cp s3://${keys_bucket}/ ./keys --recursive
 fi
 
 touch /var/log/concourse_web.log

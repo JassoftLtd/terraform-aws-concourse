@@ -43,6 +43,11 @@ resource "aws_instance" "concourse_web" {
   associate_public_ip_address = true
   iam_instance_profile = "${aws_iam_instance_profile.concourse_profile.id}"
   vpc_security_group_ids = ["${aws_security_group.concourse_web_security_group.id}"]
+  key_name = "${var.key_name}"
+  root_block_device {
+    volume_type = "gp2"
+    volume_size = 100
+  }
 
   tags {
     Name = "Concoourse-Web"
@@ -62,5 +67,10 @@ resource "aws_spot_fleet_request" "concourse_workers" {
     vpc_security_group_ids = ["${aws_security_group.concourse_worker_security_group.id}"]
     user_data         = "${data.template_file.concourse_worker_init.rendered}"
     iam_instance_profile = "${aws_iam_instance_profile.concourse_profile.id}"
+    key_name = "${var.key_name}"
+    root_block_device {
+      volume_type = "gp2"
+      volume_size = 100
+    }
   }
 }
