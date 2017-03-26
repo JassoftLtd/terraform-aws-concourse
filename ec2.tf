@@ -22,6 +22,8 @@ data "template_file" "concourse_web_init" {
     database_password = "${aws_db_instance.concourse-db.password}"
     database_identifier = "${aws_db_instance.concourse-db.name}"
     keys_bucket = "${aws_s3_bucket.keys-bucket.bucket}"
+    basic_auth_username = "${var.basic_auth_username}"
+    basic_auth_password = "${var.basic_auth_password}"
   }
 }
 

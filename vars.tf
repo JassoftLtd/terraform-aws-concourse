@@ -29,3 +29,13 @@ variable "private_subnet_cidr" {
 variable "key_name" {
   description = "Key pair name"
 }
+
+variable "basic_auth_username" {
+  description = "Username for Basic Auth"
+  default = "concourse"
+}
+
+variable "basic_auth_password" {
+  description = "Password for Basic Auth"
+  default = "concourse"
+}
