@@ -34,5 +34,5 @@ chmod 666 /var/log/concourse_web.log
   --tsa-host-key ./keys/web/tsa_host_key \
   --tsa-authorized-keys ./keys/web/authorized_worker_keys \
   --postgres-data-source postgres://${database_username}:${database_password}@${database_address}:${database_port}/${database_identifier} \
-  --external-url http://my-ci.example.com \
+  --external-url ${external-url} \
   2>&1 > /var/log/concourse_web.log &
