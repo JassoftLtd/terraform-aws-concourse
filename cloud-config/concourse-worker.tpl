@@ -8,7 +8,7 @@ if ! which concourse; then
   mv concourse /usr/local/bin/concourse
 fi
 
-while [ `aws s3 ls s3://concourse-keys/worker/tsa_host_key.pub | grep tsa_host_key.pub -c` -eq 0 ]
+while [ `aws s3 ls s3://${keys_bucket}/worker/tsa_host_key.pub | grep tsa_host_key.pub -c` -eq 0 ]
 do
     echo "sleeping"
     sleep 10

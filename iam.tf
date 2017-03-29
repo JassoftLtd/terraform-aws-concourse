@@ -56,7 +56,7 @@ data "aws_iam_policy_document" "concourse_role" {
       "s3:*",
     ],
     "resources" = [
-      "*"
+      "${aws_s3_bucket.keys-bucket.arn}"
     ]
   }
 }
