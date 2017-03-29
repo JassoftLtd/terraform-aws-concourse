@@ -26,7 +26,7 @@ resource "aws_iam_role_policy_attachment" "iam_fleet_role_policy_attachment" {
 }
 
 resource "aws_iam_instance_profile" "concourse_profile" {
-  name  = "test_profile"
+  name  = "concourse_profile"
   roles = ["${aws_iam_role.concourse_role.name}"]
 }
 
@@ -56,7 +56,7 @@ data "aws_iam_policy_document" "concourse_role" {
       "s3:*",
     ],
     "resources" = [
-      "arn:aws:s3:::${aws_s3_bucket.keys-bucket.bucket}/*"
+      "*",
     ]
   }
 }
