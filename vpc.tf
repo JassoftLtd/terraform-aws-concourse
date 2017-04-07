@@ -13,7 +13,7 @@ resource "aws_internet_gateway" "default" {
 /*
   Public Subnet
 */
-resource "aws_subnet" "eu-west-1a-public" {
+resource "aws_subnet" "public" {
   vpc_id = "${aws_vpc.default.id}"
 
   cidr_block = "${var.public_subnet_cidr}"
@@ -24,7 +24,7 @@ resource "aws_subnet" "eu-west-1a-public" {
   }
 }
 
-resource "aws_route_table" "eu-west-1a-public" {
+resource "aws_route_table" "public" {
   vpc_id = "${aws_vpc.default.id}"
 
   route {
@@ -37,9 +37,9 @@ resource "aws_route_table" "eu-west-1a-public" {
   }
 }
 
-resource "aws_route_table_association" "eu-west-1a-public" {
-  subnet_id = "${aws_subnet.eu-west-1a-public.id}"
-  route_table_id = "${aws_route_table.eu-west-1a-public.id}"
+resource "aws_route_table_association" "public" {
+  subnet_id = "${aws_subnet.public.id}"
+  route_table_id = "${aws_route_table.public.id}"
 }
 
 resource "aws_eip" "nat_eip" {
@@ -48,24 +48,44 @@ resource "aws_eip" "nat_eip" {
 
 resource "aws_nat_gateway" "nat_gw" {
   allocation_id = "${aws_eip.nat_eip.id}"
-  subnet_id     = "${aws_subnet.eu-west-1a-public.id}"
+  subnet_id     = "${aws_subnet.public.id}"
 }
 
 /*
   Private Subnet
 */
-resource "aws_subnet" "eu-west-1a-private" {
-  vpc_id = "${aws_vpc.default.id}"
+resource "aws_subnet" "private-a" {
+  vpc_id            = "${aws_vpc.default.id}"
 
-  cidr_block = "${var.private_subnet_cidr}"
-  availability_zone = "eu-west-1b"
+  cidr_block        = "${var.private_subnet_cidr}"
+  availability_zone = "${var.availability_zones[0]}"
 
   tags {
-    Name = "Concourse Private Subnet"
+    Name = "Concourse Private Subnet-a"
+  }
+}
+resource "aws_subnet" "private-b" {
+  vpc_id            = "${aws_vpc.default.id}"
+
+  cidr_block        = "${var.private_subnet_cidr}"
+  availability_zone = "${var.availability_zones[1]}"
+
+  tags {
+    Name = "Concourse Private Subnet-b"
+  }
+}
+resource "aws_subnet" "private-c" {
+  vpc_id            = "${aws_vpc.default.id}"
+
+  cidr_block        = "${var.private_subnet_cidr}"
+  availability_zone = "${var.availability_zones[2]}"
+
+  tags {
+    Name = "Concourse Private Subnet-c"
   }
 }
 
-resource "aws_route_table" "eu-west-1a-private" {
+resource "aws_route_table" "private" {
   vpc_id = "${aws_vpc.default.id}"
 
   tags {
@@ -74,14 +94,22 @@ resource "aws_route_table" "eu-west-1a-private" {
 }
 
 resource "aws_route" "private_nat_gateway_route" {
-  route_table_id         = "${aws_route_table.eu-west-1a-private.id}"
+  route_table_id         = "${aws_route_table.private.id}"
   destination_cidr_block = "0.0.0.0/0"
   nat_gateway_id         = "${aws_nat_gateway.nat_gw.id}"
 }
 
-resource "aws_route_table_association" "eu-west-1a-private" {
-  subnet_id = "${aws_subnet.eu-west-1a-private.id}"
-  route_table_id = "${aws_route_table.eu-west-1a-private.id}"
+resource "aws_route_table_association" "private-a" {
+  subnet_id = "${aws_subnet.private-a.id}"
+  route_table_id = "${aws_route_table.private.id}"
+}
+resource "aws_route_table_association" "private-b" {
+  subnet_id = "${aws_subnet.private-b.id}"
+  route_table_id = "${aws_route_table.private.id}"
+}
+resource "aws_route_table_association" "private-c" {
+  subnet_id = "${aws_subnet.private-c.id}"
+  route_table_id = "${aws_route_table.private.id}"
 }
 
 /*
@@ -90,6 +118,6 @@ resource "aws_route_table_association" "eu-west-1a-private" {
 resource "aws_db_subnet_group" "concourse_rds_subnet_group" {
   name        = "concourse_rds_subnet_group"
   description = "Database subnet group"
-  subnet_ids  = ["${aws_subnet.eu-west-1a-public.id}", "${aws_subnet.eu-west-1a-private.id}"]
+  subnet_ids  = ["${aws_subnet.public.id}", "${aws_subnet.private-a.id}", "${aws_subnet.private-b.id}", "${aws_subnet.private-c.id}"]
 
 }

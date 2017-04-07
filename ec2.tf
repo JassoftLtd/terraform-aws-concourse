@@ -40,7 +40,7 @@ data "template_file" "concourse_worker_init" {
 resource "aws_instance" "concourse_web" {
   ami           = "${data.aws_ami.amazon_linux.id}"
   instance_type = "t2.micro"
-  subnet_id = "${aws_subnet.eu-west-1a-public.id}"
+  subnet_id = "${aws_subnet.public.id}"
   private_ip = "10.0.0.5"
   user_data = "${data.template_file.concourse_web_init.rendered}"
   associate_public_ip_address = true
@@ -66,7 +66,7 @@ resource "aws_spot_fleet_request" "concourse_workers" {
   launch_specification {
     instance_type     = "m4.large"
     ami               = "${data.aws_ami.amazon_linux.id}"
-    subnet_id         = "${aws_subnet.eu-west-1a-private.id}"
+    subnet_id         = "${aws_subnet.private-a.id}"
     vpc_security_group_ids = ["${aws_security_group.concourse_worker_security_group.id}"]
     user_data         = "${data.template_file.concourse_worker_init.rendered}"
     iam_instance_profile = "${aws_iam_instance_profile.concourse_profile.id}"
@@ -76,4 +76,33 @@ resource "aws_spot_fleet_request" "concourse_workers" {
       volume_size = 100
     }
   }
+
+  launch_specification {
+    instance_type     = "m4.large"
+    ami               = "${data.aws_ami.amazon_linux.id}"
+    subnet_id         = "${aws_subnet.private-b.id}"
+    vpc_security_group_ids = ["${aws_security_group.concourse_worker_security_group.id}"]
+    user_data         = "${data.template_file.concourse_worker_init.rendered}"
+    iam_instance_profile = "${aws_iam_instance_profile.concourse_profile.id}"
+    key_name = "${var.key_name}"
+    root_block_device {
+      volume_type = "gp2"
+      volume_size = 100
+    }
+  }
+
+  launch_specification {
+    instance_type     = "m4.large"
+    ami               = "${data.aws_ami.amazon_linux.id}"
+    subnet_id         = "${aws_subnet.private-c.id}"
+    vpc_security_group_ids = ["${aws_security_group.concourse_worker_security_group.id}"]
+    user_data         = "${data.template_file.concourse_worker_init.rendered}"
+    iam_instance_profile = "${aws_iam_instance_profile.concourse_profile.id}"
+    key_name = "${var.key_name}"
+    root_block_device {
+      volume_type = "gp2"
+      volume_size = 100
+    }
+  }
+
 }

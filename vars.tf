@@ -26,6 +26,12 @@ variable "private_subnet_cidr" {
   default = "10.0.1.0/24"
 }
 
+variable "availability_zones" {
+  type        = "list"
+  description = "The availability zones"
+  default     = ["eu-west-1a", "eu-west-1b", "eu-west-1c"]
+}
+
 variable "key_name" {
   description = "Key pair name"
 }
