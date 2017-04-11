@@ -27,12 +27,18 @@ fi
 touch /var/log/concourse_web.log
 chmod 666 /var/log/concourse_web.log
 
-/usr/local/bin/concourse web \
-  --basic-auth-username ${basic_auth_username} \
-  --basic-auth-password ${basic_auth_password} \
-  --session-signing-key ./keys/web/session_signing_key \
-  --tsa-host-key ./keys/web/tsa_host_key \
-  --tsa-authorized-keys ./keys/web/authorized_worker_keys \
-  --postgres-data-source postgres://${database_username}:${database_password}@${database_address}:${database_port}/${database_identifier} \
-  --external-url ${external-url} \
-  2>&1 > /var/log/concourse_web.log &
+crontab -l > concoursecron
+echo "@reboot /usr/local/bin/concourse web \
+                --basic-auth-username ${basic_auth_username} \
+                --basic-auth-password ${basic_auth_password} \
+                --session-signing-key ./keys/web/session_signing_key \
+                --tsa-host-key ./keys/web/tsa_host_key \
+                --tsa-authorized-keys ./keys/web/authorized_worker_keys \
+                --postgres-data-source postgres://${database_username}:${database_password}@${database_address}:${database_port}/${database_identifier} \
+                --external-url ${external-url} \
+                2>&1 > /var/log/concourse_web.log &" >> concoursecron
+
+crontab concoursecron
+rm concoursecron
+
+reboot
