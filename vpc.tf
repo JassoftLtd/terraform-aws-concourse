@@ -57,7 +57,7 @@ resource "aws_nat_gateway" "nat_gw" {
 resource "aws_subnet" "private-a" {
   vpc_id            = "${aws_vpc.default.id}"
 
-  cidr_block        = "${var.private_subnet_cidr}"
+  cidr_block        = "${var.private_subnet_cidr[0]}"
   availability_zone = "${var.availability_zones[0]}"
 
   tags {
@@ -67,7 +67,7 @@ resource "aws_subnet" "private-a" {
 resource "aws_subnet" "private-b" {
   vpc_id            = "${aws_vpc.default.id}"
 
-  cidr_block        = "${var.private_subnet_cidr}"
+  cidr_block        = "${var.private_subnet_cidr[1]}"
   availability_zone = "${var.availability_zones[1]}"
 
   tags {
@@ -77,7 +77,7 @@ resource "aws_subnet" "private-b" {
 resource "aws_subnet" "private-c" {
   vpc_id            = "${aws_vpc.default.id}"
 
-  cidr_block        = "${var.private_subnet_cidr}"
+  cidr_block        = "${var.private_subnet_cidr[2]}"
   availability_zone = "${var.availability_zones[2]}"
 
   tags {
