@@ -62,6 +62,7 @@ resource "aws_spot_fleet_request" "concourse_workers" {
   spot_price      = "0.02"
   target_capacity = 1
   valid_until     = "2019-11-04T20:44:20Z"
+  replace_unhealthy_instances = true
 
   launch_specification {
     instance_type     = "m4.large"
