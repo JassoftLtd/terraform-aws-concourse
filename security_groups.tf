@@ -14,14 +14,7 @@ resource "aws_security_group" "concourse_web_security_group" {
     from_port   = "2222"
     to_port     = "2222"
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  ingress {
-    from_port   = "22"
-    to_port     = "22"
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
+    cidr_blocks = "${var.private_subnet_cidr}"
   }
 
   egress {
@@ -41,13 +34,6 @@ resource "aws_security_group" "concourse_worker_security_group" {
     from_port   = 0
     to_port     = 0
     protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  ingress {
-    from_port   = "22"
-    to_port     = "22"
-    protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
 }
