@@ -44,12 +44,10 @@ variable "key_name" {
 
 variable "basic_auth_username" {
   description = "Username for Basic Auth"
-  default = "concourse"
 }
 
 variable "basic_auth_password" {
   description = "Password for Basic Auth"
-  default = "concourse"
 }
 
 # DNS
@@ -59,4 +57,10 @@ variable "dns_zone_id" {
 
 variable "dns_zone_name" {
   description = "Amazon Route53 DNS zone name"
+}
+
+# Concourse
+variable "concourse_version" {
+  description = "The version on concourse to deploy"
+  default = "v3.0.1"
 }
