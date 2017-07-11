@@ -24,6 +24,7 @@ chmod 666 /var/log/concourse_worker.log
 /usr/local/bin/concourse worker \
   --work-dir /opt/concourse/worker \
   --tsa-host ${tsa_host} \
+  --tsa-port ${tsa_port} \
   --tsa-public-key ./keys/worker/tsa_host_key.pub \
   --tsa-worker-private-key ./keys/worker/worker_key \
   2>&1 > /var/log/concourse_worker.log &

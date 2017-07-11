@@ -16,3 +16,6 @@ terraform apply \
     -var basic_auth_username=YOUR_USERNAME 
     -var basic_auth_password=YOUR_PASSWORD 
 ```
+
+You can optionally define a variable of `private_workers` (default: true).
+ Disabling this value will put the workers in the public subnets, which negates the need for a NAT gateway

@@ -35,7 +35,9 @@ echo "@reboot /usr/local/bin/concourse web \
                 --tsa-host-key /home/ec2-user/keys/web/tsa_host_key \
                 --tsa-authorized-keys /home/ec2-user/keys/web/authorized_worker_keys \
                 --postgres-data-source postgres://${database_username}:${database_password}@${database_address}:${database_port}/${database_identifier} \
+                --bind-port 80 \
                 --external-url ${external-url} \
+                --peer-url http://$(hostname -I) \
                 2>&1 > /var/log/concourse_web.log &" >> concoursecron
 
 crontab concoursecron

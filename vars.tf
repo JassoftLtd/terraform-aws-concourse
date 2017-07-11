@@ -8,34 +8,40 @@ variable "aws_secret_key" {
 
 variable "aws_region" {
   description = "AWS Region"
-  default = "eu-west-1"
+  default     = "eu-west-1"
 }
 
 variable "keys_bucket_name" {
   description = "S3 bucket to store keys in"
-  default = "concourse-keys"
+  default     = "concourse-keys"
 }
 
 variable "vpc_cidr" {
   description = "CIDR for the whole VPC"
-  default = "10.0.0.0/16"
+  default     = "10.0.0.0/16"
 }
 
 variable "public_subnet_cidr" {
+  type        = "list"
   description = "CIDR for the Public Subnet"
-  default = "10.0.0.0/24"
+  default     = ["10.0.1.0/24", "10.0.2.0/24", "10.0.3.0/24"]
 }
 
 variable "private_subnet_cidr" {
-  type = "list"
+  type        = "list"
   description = "CIDR for the Private Subnet"
-  default = ["10.0.1.0/24", "10.0.2.0/24", "10.0.3.0/24"]
+  default     = ["10.0.4.0/24", "10.0.5.0/24", "10.0.6.0/24"]
 }
 
 variable "availability_zones" {
   type        = "list"
   description = "The availability zones"
   default     = ["eu-west-1a", "eu-west-1b", "eu-west-1c"]
+}
+
+variable "private_workers" {
+  description = "Should be workers be placed in a private sebnet with a NAT gateway"
+  default     = true
 }
 
 variable "key_name" {
@@ -62,5 +68,5 @@ variable "dns_zone_name" {
 # Concourse
 variable "concourse_version" {
   description = "The version on concourse to deploy"
-  default = "v3.0.1"
+  default     = "v3.3.2"
 }
