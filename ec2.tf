@@ -61,11 +61,12 @@ resource "aws_instance" "concourse_web" {
 }
 
 resource "aws_spot_fleet_request" "concourse_workers" {
-  iam_fleet_role              = "${aws_iam_role.concourse_worker_role.arn}"
-  spot_price                  = "0.02"
-  target_capacity             = 1
-  valid_until                 = "2019-11-04T20:44:20Z"
-  replace_unhealthy_instances = true
+  iam_fleet_role                      = "${aws_iam_role.concourse_worker_role.arn}"
+  spot_price                          = "0.02"
+  target_capacity                     = 1
+  valid_until                         = "2019-11-04T20:44:20Z"
+  replace_unhealthy_instances         = true
+  terminate_instances_with_expiration = true
 
   launch_specification {
     instance_type               = "m4.large"

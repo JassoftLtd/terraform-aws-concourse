@@ -68,5 +68,5 @@ variable "dns_zone_name" {
 # Concourse
 variable "concourse_version" {
   description = "The version on concourse to deploy"
-  default     = "v3.3.2"
+  default     = "v3.0.1"
 }
