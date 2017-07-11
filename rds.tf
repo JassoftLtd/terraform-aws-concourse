@@ -3,7 +3,7 @@ resource "aws_db_instance" "concourse-db" {
   allocated_storage           = 20
   storage_type                = "gp2"
   engine                      = "postgres"
-  engine_version              = "9.6.2"
+  engine_version              = "9.5.4"
   instance_class              = "db.t2.micro"
   name                        = "concourse"
   username                    = "concourse"
@@ -11,6 +11,5 @@ resource "aws_db_instance" "concourse-db" {
   db_subnet_group_name        = "${aws_db_subnet_group.concourse_rds_subnet_group.name}"
   vpc_security_group_ids      = ["${aws_security_group.concourse_db_security_group.id}"]
   skip_final_snapshot         = true
-  allow_major_version_upgrade = true
   apply_immediately           = true
 }
