@@ -80,7 +80,7 @@ resource "aws_spot_fleet_request" "concourse_workers" {
 
     root_block_device {
       volume_type = "gp2"
-      volume_size = 10
+      volume_size = 100
     }
   }
 
@@ -96,7 +96,7 @@ resource "aws_spot_fleet_request" "concourse_workers" {
 
     root_block_device {
       volume_type = "gp2"
-      volume_size = 10
+      volume_size = 100
     }
   }
 
@@ -112,7 +112,7 @@ resource "aws_spot_fleet_request" "concourse_workers" {
 
     root_block_device {
       volume_type = "gp2"
-      volume_size = 10
+      volume_size = 100
     }
   }
 }
