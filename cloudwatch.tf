@@ -9,7 +9,7 @@ resource "aws_cloudwatch_metric_alarm" "concourse_workers_high_cpu" {
   threshold           = "60"
 
   dimensions {
-    fleet_request_id = "${aws_spot_fleet_request.concourse_workers.id}"
+    FleetRequestId = "${aws_spot_fleet_request.concourse_workers.id}"
   }
 
   alarm_description = "This metric monitors Concourse Worker cpu utilization"
@@ -27,7 +27,7 @@ resource "aws_cloudwatch_metric_alarm" "concourse_workers_low_cpu" {
   threshold           = "20"
 
   dimensions {
-    fleet_request_id = "${aws_spot_fleet_request.concourse_workers.id}"
+    FleetRequestId = "${aws_spot_fleet_request.concourse_workers.id}"
   }
 
   alarm_description = "This metric monitors Concourse Worker cpu utilization"
