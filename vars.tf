@@ -70,3 +70,14 @@ variable "concourse_version" {
   description = "The version on concourse to deploy"
   default     = "v3.3.3"
 }
+
+# Workers
+variable "concourse_workers_min_instances" {
+  description = "The Minimum number of Concourse Workers to run"
+  default     = 1
+}
+
+variable "concourse_workers_max_instances" {
+  description = "The Maximum number of Concourse Workers to run"
+  default     = 10
+}
