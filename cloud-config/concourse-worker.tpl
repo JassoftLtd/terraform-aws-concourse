@@ -21,6 +21,8 @@ mkdir -p /opt/concourse/worker
 touch /var/log/concourse_worker.log
 chmod 666 /var/log/concourse_worker.log
 
+export CONCOURSE_BAGGAGECLAIM_DRIVER=naive
+
 /usr/local/bin/concourse worker \
   --work-dir /opt/concourse/worker \
   --tsa-host ${tsa_host} \
