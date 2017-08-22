@@ -57,10 +57,6 @@ variable "basic_auth_password" {
 }
 
 # DNS
-variable "dns_zone_id" {
-  description = "Amazon Route53 DNS zone identifier"
-}
-
 variable "dns_zone_name" {
   description = "Amazon Route53 DNS zone name"
 }
