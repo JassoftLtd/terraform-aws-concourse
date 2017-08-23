@@ -58,7 +58,7 @@ variable "basic_auth_password" {
 
 # DNS
 variable "dns_zone_name" {
-  description = "Amazon Route53 DNS zone name"
+  description = "Amazon Route53 DNS zone name. (Don't include trailing dot)"
 }
 
 # Concourse
