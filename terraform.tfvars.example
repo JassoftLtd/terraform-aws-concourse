@@ -1,0 +1,11 @@
+aws_access_key = ""
+aws_secret_key = ""
+
+key_name = ""
+github_auth_client_id = ""
+github_auth_client_secret = ""
+github_auth_team = ""
+
+dns_zone_name = ""
+
+private_workers = "true"

@@ -16,16 +16,17 @@ data "template_file" "concourse_web_init" {
   template = "${file("cloud-config/concourse-web.tpl")}"
 
   vars {
-    database_address    = "${aws_db_instance.concourse-db.address}"
-    database_port       = "${aws_db_instance.concourse-db.port}"
-    database_username   = "${aws_db_instance.concourse-db.username}"
-    database_password   = "${aws_db_instance.concourse-db.password}"
-    database_identifier = "${aws_db_instance.concourse-db.name}"
-    keys_bucket         = "${aws_s3_bucket.keys-bucket.bucket}"
-    basic_auth_username = "${var.basic_auth_username}"
-    basic_auth_password = "${var.basic_auth_password}"
-    external-url        = "http://concourse.${var.dns_zone_name}/"
-    concourse_version   = "${var.concourse_version}"
+    database_address          = "${aws_db_instance.concourse-db.address}"
+    database_port             = "${aws_db_instance.concourse-db.port}"
+    database_username         = "${aws_db_instance.concourse-db.username}"
+    database_password         = "${aws_db_instance.concourse-db.password}"
+    database_identifier       = "${aws_db_instance.concourse-db.name}"
+    keys_bucket               = "${aws_s3_bucket.keys-bucket.bucket}"
+    github_auth_client_id     = "${var.github_auth_client_id}"
+    github_auth_client_secret = "${var.github_auth_client_secret}"
+    github_auth_team          = "${var.github_auth_team}"
+    external-url              = "http://concourse.${var.dns_zone_name}/"
+    concourse_version         = "${var.concourse_version}"
   }
 }
 
@@ -62,7 +63,7 @@ resource "aws_instance" "concourse_web" {
 
 resource "aws_spot_fleet_request" "concourse_workers" {
   iam_fleet_role                      = "${aws_iam_role.concourse_worker_role.arn}"
-  spot_price                          = "0.02"
+  spot_price                          = "0.03"
   target_capacity                     = 1
   valid_until                         = "2019-11-04T20:44:20Z"
   replace_unhealthy_instances         = true

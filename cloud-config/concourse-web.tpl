@@ -29,8 +29,9 @@ chmod 666 /var/log/concourse_web.log
 
 crontab -l > concoursecron
 echo "@reboot /usr/local/bin/concourse web \
-                --basic-auth-username ${basic_auth_username} \
-                --basic-auth-password ${basic_auth_password} \
+                --github-auth-client-id ${github_auth_client_id} \
+                --github-auth-client-secret ${github_auth_client_secret} \
+                --github-auth-team ${github_auth_team} \
                 --session-signing-key /home/ec2-user/keys/web/session_signing_key \
                 --tsa-host-key /home/ec2-user/keys/web/tsa_host_key \
                 --tsa-authorized-keys /home/ec2-user/keys/web/authorized_worker_keys \

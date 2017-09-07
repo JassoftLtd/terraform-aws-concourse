@@ -48,12 +48,16 @@ variable "key_name" {
   description = "Key pair name"
 }
 
-variable "basic_auth_username" {
-  description = "Username for Basic Auth"
+variable "github_auth_client_id" {
+  description = "GitHub Client Id"
 }
 
-variable "basic_auth_password" {
-  description = "Password for Basic Auth"
+variable "github_auth_client_secret" {
+  description = "GitHub Client Secret"
+}
+
+variable "github_auth_team" {
+  description = "GitHub Team Name"
 }
 
 # DNS
