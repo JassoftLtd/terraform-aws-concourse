@@ -39,6 +39,12 @@ variable "availability_zones" {
   default     = ["eu-west-1a", "eu-west-1b", "eu-west-1c"]
 }
 
+variable "whitelist_ips" {
+  type        = "list"
+  description = "IPs that are able to access Concourse"
+  default     = ["0.0.0.0/0"]
+}
+
 variable "private_workers" {
   description = "Should be workers be placed in a private sebnet with a NAT gateway"
   default     = true

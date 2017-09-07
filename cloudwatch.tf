@@ -13,6 +13,7 @@ resource "aws_cloudwatch_metric_alarm" "concourse_workers_high_cpu" {
   }
 
   alarm_description = "This metric monitors Concourse Worker cpu utilization"
+
   //  alarm_actions     = ["${aws_appautoscaling_policy.concourse_workers_scale.arn}"]
 }
 
@@ -31,5 +32,6 @@ resource "aws_cloudwatch_metric_alarm" "concourse_workers_low_cpu" {
   }
 
   alarm_description = "This metric monitors Concourse Worker cpu utilization"
+
   //  alarm_actions     = ["${aws_appautoscaling_policy.concourse_workers_scale.arn}"]
 }
