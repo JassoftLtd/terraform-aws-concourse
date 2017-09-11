@@ -78,6 +78,16 @@ variable "concourse_version" {
 }
 
 # Workers
+variable "concourse_workers_instance_type" {
+  description = "The EC2 instance type to run as a worker"
+  default     = "c4.xlarge"
+}
+
+variable "concourse_workers_spot_request_max_price" {
+  description = "The Max price for the EC2 Spot Request"
+  default     = "0.1"
+}
+
 variable "concourse_workers_min_instances" {
   description = "The Minimum number of Concourse Workers to run"
   default     = 1

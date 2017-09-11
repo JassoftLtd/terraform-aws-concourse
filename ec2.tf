@@ -63,14 +63,14 @@ resource "aws_instance" "concourse_web" {
 
 resource "aws_spot_fleet_request" "concourse_workers" {
   iam_fleet_role                      = "${aws_iam_role.concourse_worker_role.arn}"
-  spot_price                          = "0.03"
+  spot_price                          = "${var.concourse_workers_spot_request_max_price}"
   target_capacity                     = 1
   valid_until                         = "2019-11-04T20:44:20Z"
   replace_unhealthy_instances         = true
   terminate_instances_with_expiration = true
 
   launch_specification {
-    instance_type               = "m4.large"
+    instance_type               = "${var.concourse_workers_instance_type}"
     ami                         = "${data.aws_ami.amazon_linux.id}"
     subnet_id                   = "${var.private_workers == false ? element(aws_subnet.public.*.id, 0) : element(aws_subnet.private.*.id, 0)}"
     associate_public_ip_address = "${var.private_workers == false}"
@@ -86,7 +86,7 @@ resource "aws_spot_fleet_request" "concourse_workers" {
   }
 
   launch_specification {
-    instance_type               = "m4.large"
+    instance_type               = "${var.concourse_workers_instance_type}"
     ami                         = "${data.aws_ami.amazon_linux.id}"
     subnet_id                   = "${var.private_workers == false ? element(aws_subnet.public.*.id, 1) : element(aws_subnet.private.*.id, 1)}"
     associate_public_ip_address = "${var.private_workers == false}"
@@ -102,7 +102,7 @@ resource "aws_spot_fleet_request" "concourse_workers" {
   }
 
   launch_specification {
-    instance_type               = "m4.large"
+    instance_type               = "${var.concourse_workers_instance_type}"
     ami                         = "${data.aws_ami.amazon_linux.id}"
     subnet_id                   = "${var.private_workers == false ? element(aws_subnet.public.*.id, 2) : element(aws_subnet.private.*.id, 2)}"
     associate_public_ip_address = "${var.private_workers == false}"
