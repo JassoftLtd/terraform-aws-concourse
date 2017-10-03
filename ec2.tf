@@ -38,6 +38,7 @@ data "template_file" "concourse_worker_init" {
     tsa_port          = "2222"
     keys_bucket       = "${aws_s3_bucket.keys-bucket.bucket}"
     concourse_version = "${var.concourse_version}"
+    baggageclaim_driver = "naive"
   }
 }
 
@@ -81,7 +82,7 @@ resource "aws_spot_fleet_request" "concourse_workers" {
 
     root_block_device {
       volume_type = "gp2"
-      volume_size = 100
+      volume_size = "${var.concourse_workers_volume_size}"
     }
   }
 
@@ -97,7 +98,7 @@ resource "aws_spot_fleet_request" "concourse_workers" {
 
     root_block_device {
       volume_type = "gp2"
-      volume_size = 100
+      volume_size = "${var.concourse_workers_volume_size}"
     }
   }
 
@@ -113,7 +114,7 @@ resource "aws_spot_fleet_request" "concourse_workers" {
 
     root_block_device {
       volume_type = "gp2"
-      volume_size = 100
+      volume_size = "${var.concourse_workers_volume_size}"
     }
   }
 }

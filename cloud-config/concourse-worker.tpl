@@ -21,7 +21,7 @@ mkdir -p /opt/concourse/worker
 touch /var/log/concourse_worker.log
 chmod 666 /var/log/concourse_worker.log
 
-export CONCOURSE_BAGGAGECLAIM_DRIVER=naive
+export CONCOURSE_BAGGAGECLAIM_DRIVER=${baggageclaim_driver}
 
 /usr/local/bin/concourse worker \
   --work-dir /opt/concourse/worker \

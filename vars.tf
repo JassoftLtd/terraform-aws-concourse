@@ -83,6 +83,11 @@ variable "concourse_workers_instance_type" {
   default     = "c4.xlarge"
 }
 
+variable "concourse_workers_volume_size" {
+  description = "The amount of starage space for the Worker"
+  default     = 100
+}
+
 variable "concourse_workers_spot_request_max_price" {
   description = "The Max price for the EC2 Spot Request"
   default     = "0.1"
