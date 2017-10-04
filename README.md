@@ -4,6 +4,8 @@ Terraform scripts to deploy Concourse into an AWS account.
 This Concourse setup runs with a Postgres instance in RDS and workers in a spot request fleet.
 This gives a discount to running the workers and also allows a flexible number of instances to be configured in the auto scaling group.
 
+![AWS Architecture](./docs/ConcourseCI.png "AWS Architecture")
+
 # Deploy to AWS
 Setup AWS S3 Backend
 ```
