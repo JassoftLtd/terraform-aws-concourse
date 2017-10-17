@@ -88,7 +88,7 @@ resource "aws_route" "private_nat_gateway_route" {
 }
 
 resource "aws_route_table_association" "private-a" {
-  count          = "${var.private_workers == false ? 0 : length(var.public_subnet_cidr)}"
+  count          = "${var.private_workers == false ? 0 : length(var.private_subnet_cidr)}"
   subnet_id      = "${element(aws_subnet.private.*.id, count.index)}"
   route_table_id = "${aws_route_table.private.id}"
 }

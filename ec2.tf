@@ -54,7 +54,7 @@ resource "aws_instance" "concourse_web" {
 
   root_block_device {
     volume_type = "gp2"
-    volume_size = 8
+    volume_size = 100
   }
 
   tags {
@@ -65,7 +65,7 @@ resource "aws_instance" "concourse_web" {
 resource "aws_spot_fleet_request" "concourse_workers" {
   iam_fleet_role                      = "${aws_iam_role.concourse_worker_role.arn}"
   spot_price                          = "${var.concourse_workers_spot_request_max_price}"
-  target_capacity                     = 1
+  target_capacity                     = "${var.concourse_workers_min_instances}"
   valid_until                         = "2019-11-04T20:44:20Z"
   replace_unhealthy_instances         = true
   terminate_instances_with_expiration = true

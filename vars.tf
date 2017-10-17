@@ -96,7 +96,7 @@ variable "concourse_workers_spot_request_max_price" {
 
 variable "concourse_workers_min_instances" {
   description = "The Minimum number of Concourse Workers to run"
-  default     = 1
+  default     = 2
 }
 
 variable "concourse_workers_max_instances" {
