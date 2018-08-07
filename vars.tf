@@ -81,7 +81,7 @@ variable "concourse_version" {
 # Workers
 variable "concourse_workers_instance_type" {
   description = "The EC2 instance type to run as a worker"
-  default     = "c4.xlarge"
+  default     = "c5.xlarge"
 }
 
 variable "concourse_workers_volume_size" {
@@ -91,7 +91,7 @@ variable "concourse_workers_volume_size" {
 
 variable "concourse_workers_spot_request_max_price" {
   description = "The Max price for the EC2 Spot Request"
-  default     = "0.1"
+  default     = "0.2"
 }
 
 variable "concourse_workers_min_instances" {

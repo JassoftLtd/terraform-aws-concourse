@@ -3,7 +3,7 @@ resource "aws_db_instance" "concourse-db" {
   allocated_storage      = 20
   storage_type           = "gp2"
   engine                 = "postgres"
-  engine_version         = "9.5.4"
+  engine_version         = "9.5.10"
   instance_class         = "db.t2.micro"
   name                   = "concourse"
   username               = "concourse"

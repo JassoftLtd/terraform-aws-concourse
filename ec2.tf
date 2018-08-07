@@ -58,7 +58,7 @@ resource "aws_instance" "concourse_web" {
   }
 
   tags {
-    Name = "Concoourse-Web"
+    Name = "Concourse-Web"
   }
 }
 
