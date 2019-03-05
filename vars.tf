@@ -25,7 +25,8 @@ variable "public_subnet_cidr" {
   type        = "list"
   description = "CIDR for the Public Subnet"
   default     = ["10.0.1.0/24"]
-//  default     = ["10.0.1.0/24", "10.0.2.0/24", "10.0.3.0/24"]
+
+  //  default     = ["10.0.1.0/24", "10.0.2.0/24", "10.0.3.0/24"]
 }
 
 variable "private_subnet_cidr" {
@@ -78,10 +79,15 @@ variable "concourse_version" {
   default     = "v3.3.3"
 }
 
+variable "concourse_web_instance_type" {
+  description = "The EC2 instance type to run as a web instance"
+  default     = "t2.small"
+}
+
 # Workers
 variable "concourse_workers_instance_type" {
   description = "The EC2 instance type to run as a worker"
-  default     = "c5.xlarge"
+  default     = "t3.xlarge"
 }
 
 variable "concourse_workers_volume_size" {
@@ -91,7 +97,7 @@ variable "concourse_workers_volume_size" {
 
 variable "concourse_workers_spot_request_max_price" {
   description = "The Max price for the EC2 Spot Request"
-  default     = "0.2"
+  default     = "0.4"
 }
 
 variable "concourse_workers_min_instances" {
